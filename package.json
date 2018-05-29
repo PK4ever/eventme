@@ -1,11 +1,11 @@
 {
-  "name": "my-auth",
+  "name": "eventme",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod --aot=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -32,6 +32,8 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
+    "@angular-devkit/core": "0.0.29",
+    "@angular-devkit/schematics": "0.0.34",
     "@angular/cli": "1.6.1",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",

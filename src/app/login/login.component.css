@@ -1,16 +1,52 @@
-.loginButton{
-  width: 200px;
-  margin-top: 20px;
-  background-color: transparent;
-  border-color: aqua;
+.nav{
+
+  /*background-color: #C0B283;*/
+  background-color: #111111;
+
+
 }
-.fa-google{
-  /*color: #1304043d;*/
-  color: aqua;
-  margin-right: 20px;
-  /*color: transparent;*/
+.searchField{
+  margin-top: 35px;
+  /*float: right;
+  vertical-align: middle;*/
+
 }
-.loginContainer{
-  margin: auto;
-  margin-top: 10%;
+.top {
+
+  /*display: inline-block; !* fixes spacing prob*!*/
+  /*background-color: #C0B283;*/
+  background-color: #111111;
+  /*margin-left: 70%;*/
+  /*text-align: left;*/
 }
+.login{
+  margin-left:95%;
+  margin-top: -130px;
+
+}
+.loginBtn{
+  color: gold;
+}
+.logout{
+  color: gold;
+}
+.prof_pic{
+  width: 40px;
+  border-radius: 50%;
+  background-color: white;
+
+}
+.picDiv{
+  width: 60px;
+  height: 60px;
+  margin-left:90%;
+  margin-top: -30px;
+  /*margin-left: 30%;*/
+}
+.userName{
+  margin-left:85%;
+  margin-top: -20px;
+}
+/*end of publicHomePage.html....................................................................*/
+
+

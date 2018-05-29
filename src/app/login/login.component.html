@@ -1,25 +1,45 @@
+<!--SEARCH BAR FOR LOCATION-->
+
+<div class="row nav">
+  <div align="center"  class="col-md-12">
+    <input name="location" type="text" id="location" class="searchField" placeholder="location"/>
+    <input name="keyWord" type="text" id="keyword" class="searchField" placeholder="keyword"/>
+    <input type="submit" id="searchSubmit">
+  </div>
+</div>
 
 <div *ngIf="authService.user | async; then authenticated else notAuthenticated">
   <!-- template will replace this div -->
+
 </div>
+<div id="event" class="row"></div>
 
 <ng-template #notAuthenticated >
+  <div class= "col-sm-12 top">
 
-  <div class="container row loginContainer">
-    <div class="col-md-12 text-center">
-      <h3>KITCHEN ASSIST</h3>
-      <!--<i class="fa fa-user-circle-o fa-4x" aria-hidden="true"></i>-->
-      <img src="../assets/ka2.png" width="80" height="80">
-      <p >Making your kitchen smarter with the Google Home</p>
-
-  <button (click)="login()" class="text-center loginButton">
-    <i class="fa fa-google fa-2x"></i> Login with Google
-  </button>
-    </div>
+    <span class="btn login">
+        <a class="loginBtn" (click)="login()" ><i class="fa fa-google fa-2x"></i>login</a>
+    </span>
+    <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>-->
   </div>
+  <!--SEARCH BAR FOR LOCATION-->
+  <!--<button (click)="login()">-->
+    <!--<i (click)="login()" class="fa fa-google fa-2x"></i> login-->
+  <!--</button>-->
 </ng-template>
 
 <ng-template #authenticated>
+  <div class= "col-sm-12 top">
+    <div *ngIf="authService.user | async as user">
+      <div class="picDiv">
+        <img class="prof_pic" [src]="user.photoURL">
+      </div>
+      <div class="userName text-center">{{user.displayName}}!</div>
+    </div>
+    <span class="btn login">
+        <a (click)="logout()" *ngIf="authService.user | async"><i class="logout">Logout</i></a>
+    </span>
+    <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>-->
+  </div>
   <app-home></app-home>
 </ng-template>
-

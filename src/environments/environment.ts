@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyCLA4xEykAgjd2UqqtWIqECCA2dGi82aDQ',
-    authDomain: 'kitchen-assistant-8b1db.firebaseapp.com',
-    databaseURL: 'https://kitchen-assistant-8b1db.firebaseio.com',
-    projectId: 'kitchen-assistant-8b1db',
-    storageBucket: 'kitchen-assistant-8b1db.appspot.com',
-    messagingSenderId: '84277620801'
+    apiKey: 'AIzaSyBF8jy1CzX1ueeeDY8Wt45FOQkNj3IxCCs',
+    authDomain: 'eventme-7da8c.firebaseapp.com',
+    databaseURL: 'https://eventme-7da8c.firebaseio.com',
+    projectId: 'eventme-7da8c',
+    storageBucket: 'eventme-7da8c.appspot.com',
+    messagingSenderId: '542930923589'
   }
 };

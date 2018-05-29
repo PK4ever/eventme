@@ -2,15 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>MyAuth</title>
+  <title>Eventme</title>
   <base href="/">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-
+  <!--EVENTFUL API-->
+  <script type="text/javascript" src="http://api.eventful.com/js/api"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeS4cKIn4JZZh1JseBVgMpiPwwWTgjsOA&libraries=places"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+  <script>
+    $(document).ready(function() {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success,fail);
+      }
+
+      $("#searchSubmit").click(function() {
+        console.log("here");
+        getEvents($("#location").val(),$("#keyword").val());
+      });
+    });
+
+
+    function success(position) {
+      $.getJSON(
+        "https://fcc-weather-api.glitch.me/api/current?lat=" +
+        position.coords.latitude +
+        "&lon=" +
+        position.coords.longitude,
+
+        function(json) {
+          // alert(position.coords.latitude + "  " + position.coords.longitude);
+
+          var location = json.name+ " , "+ json.sys.country;
+          // alert(json.name+ " , "+ json.sys.country);
+          $("#location").html(location);
+          $("#weatherDescription").html(json.weather[0].description);
+
+        }
+      );
+      $.getJSON(
+        "https://maps.googleapis.com/maps/api/geocode/json?" +
+        "latlng=+"+position.coords.latitude+","+position.coords.longitude+"&key=AIzaSyAeS4cKIn4JZZh1JseBVgMpiPwwWTgjsOA",
+        function (data) {
+          console.log(data);
+
+          var location = data.results[0].address_components[3].long_name+", "+data.results[0].address_components[5].short_name;
+          getEvents(location,"" );
+        });
+    }
+    function fail() {
+      getEvents("Brooklyn, NY", "");
+    }
+
+    function getEvents(location, keyword) {
+      $("#location").attr("placeholder", location);
+
+      var oArgs = {
+        app_key: "qX2dNH9TZGLvBT8B",
+        q: keyword,
+        where: location,
+        // where: "syracuse",
+        page_size: 10,
+        sort_order: "popularity",
+      }
+      EVDB.API.call("/events/search", oArgs, function(oData) {
+        // alert(oData.events.event.length);
+        $("#event").empty();
+        for(var x = 0; x < oData.events.event.length; x++){
+          if(oData.events.event[x].image) {
+            var date = new Date(oData.events.event[x].start_time);
+            var dateString = date.toDateString();
+            var time = date.getHours() +" :"+date.getMinutes()+ " "+ date.getTimezoneOffset();
+              $("#event").append("<div class='col-sm-4 panel panel-default'>" +
+              "<img src=" + oData.events.event[x].image.medium.url +">"+
+              "<div class='panel-body'>" +
+              "<span>"+oData.events.event[x].title + "</span><br/>"+
+              "<span>" + dateString+" "+time+"</span><br/>" +
+              "<span>" + oData.events.event[x].venue_address + "</span>" +
+              "</div>"+
+              // "<p>" + oData.events.event[x].city_name +" , "+ oData.events.event[x].region_abbr+"</p>" +
+              "<div class='panel-footer'>Panel Footer</div>"+
+              "</div>");
+          }else{
+            $("#event").append("<li><p id='eventTitle'>" + oData.events.event[x].title + "</p>" +
+              "<p id='eventAddress'>" + oData.events.event[x].venue_address + "</p>" +
+              "</li>");
+          }
+        }
+      });
+
+    }
+
+    var google;
+    function initialize() {
+      var input = document.getElementById('location');
+      new google.maps.places.Autocomplete(input);
+    }
+    // if(google != undefined) {
+      google.maps.event.addDomListener(window, 'load', initialize);
+    // }else{
+    //   console.log("google is undefined");
+    // }
+  </script>
+
+  <!--<script>-->
+    <!--function getEvents() {-->
+      <!--var oArgs = {-->
+        <!--app_key: "qX2dNH9TZGLvBT8B",-->
+        <!--// q: keyword,-->
+        <!--q: "music",-->
+        <!--// where: location,-->
+        <!--where: "syracuse, NY",-->
+        <!--page_size: 10,-->
+        <!--sort_order: "popularity",-->
+      <!--}-->
+      <!--EVDB.API.call("/events/search", oArgs, function (oData) {-->
+        <!--console.log(oData.events.event[0].title);-->
+      <!--});-->
+    <!--}-->
+  <!--</script>-->
 </head>
 <body>
   <app-root></app-root>
